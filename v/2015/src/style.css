@@ -1,0 +1,37 @@
+body {
+	background-color: #FFF;
+	margin: 0;
+	padding: 0;
+	font-family: 'Old Standard TT', serif;
+	overflow: hidden;
+}
+
+a {
+	color: #123f4c;
+	border-bottom: 1px solid rgba(129, 145, 153, 0.4);
+	text-decoration: none;
+	padding: 0px;
+	-webkit-transition: border-bottom 100ms;
+	-moz-transition:  border-bottom 100ms;
+	-ms-transition:  border-bottom 100ms;
+	-o-transition:  border-bottom 100ms;
+	transition:  border-bottom 100ms;
+}
+
+a:hover {
+	border-bottom: 1px solid #123f4c;
+}
+
+#container {
+	color: #123f4c;
+	position: absolute;
+	left: 50%;
+	top: 25%;
+	width: 380px;
+	margin-left: -190px;
+
+	font-size: 14px;
+	line-height: 22px;
+	font-weight: 400;
+	text-shadow: 0px 2px 4px rgba(0,0,0,0.05);
+}

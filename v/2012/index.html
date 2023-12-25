@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Jathu Satkunarajah</title>
+	<meta name="description" content="Jathu Satkunarajah's website.">
+	<meta name="author" content="Jathu Satkunarajah">
+	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="imgs/fav.png" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+	<!-- Video Credit: https://www.youtube.com/watch?v=m6ugFcwsgpE -->
+	<video loop id="vid">
+		<source src="imgs/sagan.mp4" type="video/mp4">
+	</video>
+
+	<div id="bar"></div>
+
+	<div id="main">
+		<p>Hello.</p>
+
+		<p>My name is Jathu Satkunarajah. I am <a href="http://linkedin.com/in/jathus" target="_blank">currently studying</a> computer science and mathematics at the University of Toronto.<p>
+
+		<p>I love to <a href="https://github.com/jathu" target="_blank">develop software</a> and <a href="https://dribbble.com/jathu" target="_blank">design UI</a>. I also <a href="https://twitter.com/jathu" target="_blank">tweet</a> from time to time.<p>
+	</div>
+
+	<div id="adventure"></div>
+
+	<script type="text/javascript">
+		//isMobile object from: http://www.abeautifulsite.net/blog/2011/11/detecting-mobile-devices-with-javascript/
+		var isMobile = {
+		    Android: function() {
+		        return navigator.userAgent.match(/Android/i);
+		    },
+		    BlackBerry: function() {
+		        return navigator.userAgent.match(/BlackBerry/i);
+		    },
+		    iOS: function() {
+		        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+		    },
+		    Opera: function() {
+		        return navigator.userAgent.match(/Opera Mini/i);
+		    },
+		    Windows: function() {
+		        return navigator.userAgent.match(/IEMobile/i);
+		    },
+		    any: function() {
+		        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+		    }
+		},
+		mainID = document.getElementById('main'),
+		vidID = document.getElementById('vid'),
+		advID = document.getElementById('adventure'),
+		barID = document.getElementById('bar'),
+		aList = document.getElementsByTagName('a');
+
+		function setColor(hue) {
+			var newColor = "hsl("+hue+",100%, 75%)";
+			for(var i = 0; i < aList.length; i++) {
+				aList[i].style.color = newColor;
+			}
+			barID.style.background = newColor;
+			advID.style.background = newColor;
+		}
+
+		function controlColor() {
+			var hue = Math.floor(Math.random()*(250));
+			setColor(hue);
+			var inter = setInterval(function() {
+				hue = (hue < 360) ? hue+1:0;
+				setColor(hue);
+			}, 500);
+		}
+
+		var iniSet = false;
+		function screenResControl() {
+			if(isMobile.any() || window.innerWidth <= 725) {
+				vidID.style.opacity = 0;
+				advID.style.opacity = 0;
+				mainID.className = "mobile";
+			} else {
+				mainID.className = "";
+				advID.style.opacity = 1;
+				vidID.style.opacity = 0.2;
+				if(!iniSet) {
+					vidID.play();
+					vidID.volume = 0;
+					iniSet = true;
+				}
+			}
+		}
+
+		advID.addEventListener('click',function() {
+			var mainOP = 1, vidOP = 0.2;
+			var fadeOut = setInterval(function() {
+				if(mainOP > 0 || vidOP < 1) {
+					mainID.style.opacity = mainOP;
+					advID.style.opacity = mainOP;
+					mainOP -= 0.01;
+					vidID.style.opacity = vidOP;
+					vidOP += 0.01;
+				} else {
+					mainID.remove();
+					advID.remove();
+					vidID.removeAttribute('muted');
+					vidID.style.opacity = 1;
+					vidID.volume = 1;
+					vidID.currentTime = 0;
+					clearInterval(fadeOut);
+					window.onresize = null;
+				}
+			}, 10);
+		},false);
+
+		window.onresize = function() {
+			screenResControl();
+		}
+
+		window.onload = function() {
+			screenResControl(); //Control layout
+			controlColor(); //Control colors
+			var mainOP = 0, fadeIn = setInterval(function() {
+				if(mainOP < 1) {
+					mainID.style.opacity = mainOP;
+					mainOP += 0.01;
+				} else {
+					mainID.style.opacity = 1;
+					clearInterval(fadeIn);
+				}
+			}, 20);
+		}
+	</script>
+</body>
+</html>
